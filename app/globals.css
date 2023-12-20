@@ -1,27 +1,121 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@layer tw_base, radix_ui, tw_components_utils;
+@import "@radix-ui/themes/styles.css" layer(radix_ui);
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@layer tw_base {
+  @tailwind base;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer tw_components_utils {
+  @tailwind components;
+  @tailwind utilities;
+
+  .add-column {
+    @apply bg-sky-600 text-white;
+  }
+
+  [data-theme="dark"] {
+    .add-column {
+      @apply bg-white text-purple-1;
+    }
+  }
+}
+* {
+  box-sizing: border-box;
+  margin-bottom: 0;
+}
+
+:root {
+  --gray-800: #fff;
+  --gray-900: #f4f7fd;
+  --gray-700: #828fa3;
+  --border-trans: rgb(229, 231, 235);
+  --border-100: rgb(229, 231, 235);
+  --purple-100: #635fc7;
+  --opposite: #000;
+  --input-bg: #fff;
+  --loading-base: #ebebeb;
+  --loading-highlight: #f5f5f5;
+
+  --status: #e8e4e3;
+}
+
+[data-theme="dark"] {
+  --gray-700: #828fa3;
+  --gray-800: #2b2c37;
+  --gray-900: #20212c;
+  --border-trans: transparent;
+  --border-100: #3e3f4e;
+  --purple-100: #635fc7;
+  --opposite: #fff;
+  --input-bg: rgb(55 65 81 / 1);
+  --loading-base: #2b2c37;
+  --loading-highlight: #20212c;
+
+  --status: #5c5b5b;
+}
+
+@layer base {
+  .active {
+    @apply !text-white rounded-r-3xl;
+  }
+
+  .active::before {
+    @apply rounded-r-3xl bg-purple-1 -left-7 absolute inset-[-.5rem] right-4 transition-opacity z-[-1];
+    content: "";
+  }
+
+  .active .active-path,
+  .board:hover .active-path {
+    fill: white !important;
+  }
+
+  .board:hover {
+    @apply active before:bg-indigo-400 before:opacity-40;
+  }
+
+  .hide {
+    @apply -translate-x-full;
+  }
+
+  .nav {
+    @apply transition-transform duration-[1.5s];
+  }
+
+  .left-transition {
+    @apply left-0 md:left-[18rem] transition-[left] duration-[1810ms] ease-[ease];
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
+.epic {
+  color: #635fc7;
+  transition: opacity 750ms;
+}
+.epic path {
+  fill: #635fc7;
+}
+
+.epic:hover {
+  opacity: 0.5;
+}
+
+.add-column-bg {
   background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    to bottom,
+    rgba(121, 132, 147, 0.2),
+    rgba(130, 143, 163, 0.1),
+    rgba(130, 143, 163, 0)
+  );
+}
+
+.form-bg {
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+}
+
+.react-loading-skeleton {
+  --base-color: var(--loading-base) !important;
+  --highlight-color: var(--loading-highlight) !important;
+}
+
+.shadow-task {
+  box-shadow: 0 4px 6px #364e7e1a;
 }

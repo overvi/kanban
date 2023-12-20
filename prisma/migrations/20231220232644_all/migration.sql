@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE `Board` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `title` VARCHAR(7) NOT NULL,
+    `title` VARCHAR(255) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     PRIMARY KEY (`id`)
@@ -10,7 +10,7 @@ CREATE TABLE `Board` (
 -- CreateTable
 CREATE TABLE `Column` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `title` VARCHAR(7) NOT NULL,
+    `title` VARCHAR(255) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `boardId` INTEGER NOT NULL,
 
@@ -20,18 +20,21 @@ CREATE TABLE `Column` (
 -- CreateTable
 CREATE TABLE `Task` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `title` VARCHAR(7) NOT NULL,
+    `title` VARCHAR(255) NOT NULL,
     `description` TEXT NOT NULL,
-    `dueDate` DATETIME NOT NULL,
-    `priority` INTEGER NOT NULL DEFAULT 0,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `columnId` INTEGER NOT NULL,
+    `order` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- AddForeignKey
-ALTER TABLE `Column` ADD CONSTRAINT `Column_boardId_fkey` FOREIGN KEY (`boardId`) REFERENCES `Board`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+-- CreateTable
+CREATE TABLE `SubTask` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(255) NOT NULL,
+    `completed` BOOLEAN NOT NULL,
+    `taskId` INTEGER NOT NULL,
 
--- AddForeignKey
-ALTER TABLE `Task` ADD CONSTRAINT `Task_columnId_fkey` FOREIGN KEY (`columnId`) REFERENCES `Column`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

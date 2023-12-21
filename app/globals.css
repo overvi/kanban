@@ -24,6 +24,10 @@
   margin-bottom: 0;
 }
 
+html {
+  overflow-y: hidden;
+}
+
 :root {
   --gray-800: #fff;
   --gray-900: #f4f7fd;

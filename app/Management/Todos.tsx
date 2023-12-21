@@ -27,7 +27,7 @@ const Todos = ({ boards }: { boards: BoardFull[] }) => {
             <Image className="w-full md:w-2 " src={plus} alt="" />
             <Text
               htmlFor="create"
-              className="hidden md:block py-[0.5rem] px-[1rem] md:py-[.2rem] md:px-[.5rem]"
+              className="hidden md:block py-[0.5rem] px-[1rem] md:py-0 md:px-[.5rem]"
             >
               Add To Tasks
             </Text>

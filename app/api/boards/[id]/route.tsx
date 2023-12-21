@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { schemaColumn, schemaPatch, schmeaColumn } from "../../validation";
+import prisma from "@/prisma/client";
 
 interface Props {
   params: { id: string };

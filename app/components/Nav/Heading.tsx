@@ -11,7 +11,7 @@ const Heading = ({ boards }: { boards: Board[] }) => {
   return (
     <Flex className="flex gap-3 items-center">
       <Box className="flex items-center gap-3 ">
-        <Head className="font-semibold text-2xl  md:text-3xl text-opposite ">
+        <Head className="font-semibold text-base  md:text-3xl text-opposite ">
           {title?.title || "Nothing Here"}
         </Head>
       </Box>

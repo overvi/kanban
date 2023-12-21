@@ -12,7 +12,7 @@ const ChooseLogo = () => {
   if (theme === "light")
     return (
       <Box className="p-[2.32rem] hidden md:block basis-[26.5%] border-r border-b border-borders-100">
-        <Image src={logoDark} alt=""></Image>
+        <Image loading="lazy" src={logoDark} alt=""></Image>
       </Box>
     );
   return (

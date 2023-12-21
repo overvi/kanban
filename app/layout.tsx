@@ -14,7 +14,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Kanban -Task Management",
+  title: "Kanban -Task Manager",
   description: "",
 };
 

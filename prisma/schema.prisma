@@ -3,7 +3,6 @@
 
 generator client {
   provider = "prisma-client-js"
-
 }
 
 datasource db {
@@ -11,6 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
   relationMode = "prisma"
 }
+
 
 model Board {
   id        Int      @id @default(autoincrement())

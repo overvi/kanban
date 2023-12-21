@@ -1,12 +1,12 @@
 "use client";
 
 import { useDeleteBoard } from "@/app/hooks/useBoards";
+import { BoardFull } from "@/app/types/board";
 import { useBearStore } from "@/app/zustand/useCurrentBoard";
-import { Board } from "@prisma/client";
 import { Text } from "@radix-ui/themes";
 import { DeleteModal, EditBoard } from "../Modals/Modals";
 
-const DropDown = ({ boards }: { boards: Board[] }) => {
+const DropDown = ({ boards }: { boards: BoardFull[] }) => {
   const deleteAll = useDeleteBoard();
   const { currentBoard, setCurrentBoard } = useBearStore();
   const newCurrentBoard = boards.find((board) => board.id == currentBoard);

@@ -7,7 +7,10 @@ import ToggleSideBar from "../helpers/ToggleSideBar";
 const SideBar = ({ boards }: { boards: Board[] }) => {
   return (
     <>
-      <Flex className="border-r z-10 hidden fixed overflow-auto overflow-x-hidden h-[calc(100vh-6.31rem)] border-borders-100  md:flex flex-col justify-between mb-5 nav bg-gray-2  px-7">
+      <Flex
+        id="sidebar"
+        className="border-r z-50 hidden fixed overflow-auto overflow-x-hidden h-[calc(100vh-6.31rem)] border-borders-100  md:flex flex-col justify-between mb-5 nav bg-gray-2  px-7"
+      >
         <Nav boards={boards}>
           <ToggleSideBar />
         </Nav>

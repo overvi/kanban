@@ -21,6 +21,7 @@ const Todos = ({ boards }: { boards: BoardFull[] }) => {
 
         <Box className="flex gap-2 items-center  ">
           <label
+            id="add-task"
             htmlFor={data?.columns.length ? "create" : "NAN"}
             className="py-3 gap-2 cursor-pointer border-0 font-semibold  items-center  flex bg-purple-1 text-white px-5 rounded-full"
           >

@@ -2,12 +2,12 @@
 
 import { StrictModeDroppable } from "@/app/Stricts";
 import ShowModal from "@/app/helpers/ShowModal";
+import colors from "@/app/helpers/randomColor";
 import { BoardFull } from "@/app/types/board";
 import { useBearStore } from "@/app/zustand/useCurrentBoard";
+import LoadingBase from "@/loading";
 import { Box, Container, Flex, Text } from "@radix-ui/themes";
 import Empty from "./Empty";
-import getRandomColor, { colors } from "@/app/helpers/RandomizedColor";
-import LoadingBase from "@/loading";
 
 export default function FetchBoards({ boards }: { boards: BoardFull[] }) {
   const { currentBoard } = useBearStore();
@@ -25,8 +25,8 @@ export default function FetchBoards({ boards }: { boards: BoardFull[] }) {
         >
           <Flex className="items-center pb-5 gap-3 text-gray-1 font-semibold flex">
             <span
-              className={`inline-block ${colors[index]} w-4 h-4 rounded-full`}
-            ></span>
+              className={`inline-block ${colors[index]}  w-4 h-4 rounded-full`}
+            />
             <Text>
               {column.title} ( {column.tasks?.length} )
             </Text>

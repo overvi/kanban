@@ -15,9 +15,20 @@ import { ReactNode } from "react";
 import Nav from "../Nav/Nav";
 import MobileDropDown from "./MobileDropDown";
 import Modal from "./ModalBase";
+import waitFor from "@/app/helpers/WaitFor";
 
 export const CreateBoard = () => {
   const requests = useAddBoard();
+
+  const defautlBoard = async () => {
+    if (!document.querySelectorAll(".board")[1]) {
+      await waitFor(".board");
+      const target = document.querySelectorAll(
+        ".board"
+      )[0] as HTMLButtonElement;
+      target.click();
+    }
+  };
 
   return (
     <>
@@ -26,6 +37,7 @@ export const CreateBoard = () => {
         whichModal="7"
         onSubmit={(data) => {
           requests.mutate(data);
+          defautlBoard();
         }}
       />
     </>
@@ -92,7 +104,7 @@ export const DeleteModal = ({ onClick, modal, children }: Props) => {
     <>
       <input type="checkbox" id={modal} className="modal-toggle" />
       <div className="modal !mt-0 " role="dialog">
-        <div className="modal-box flex flex-col">
+        <div className="modal-box flex flex-col ">
           <h3 className="font-bold text-lg pb-5">Delete Confirm</h3>
           <p className="font-semibold">{children}</p>
           <label
@@ -101,7 +113,7 @@ export const DeleteModal = ({ onClick, modal, children }: Props) => {
               (document.getElementById(modal) as HTMLInputElement).checked =
                 false;
             }}
-            className="btn mt-7 text-white font-semibold bg-red-600 "
+            className="btn mt-7 delete-board text-white font-semibold bg-red-600 "
           >
             Delete
           </label>
@@ -121,9 +133,9 @@ export const NavBarModal = ({ boards }: { boards: Board[] }) => {
         <MobileDropDown />
       </label>
 
-      <input type="checkbox" id="my_modal_nav" className="modal-toggle" />
+      <input type="checkbox" id="my_modal_nav" className="modal-toggle " />
       <div className="modal" role="dialog">
-        <div className="modal-box bg-gray-2">
+        <div className="modal-box hidden  bg-gray-2">
           <Nav boards={boards} />
         </div>
         <label className="modal-backdrop" htmlFor="my_modal_nav">

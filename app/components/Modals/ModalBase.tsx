@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { RiDeleteBin4Line } from "react-icons/ri";
 import { returnError } from "../../types/post";
 import { Board } from "@prisma/client";
+import { error } from "console";
 
 interface Props {
   onSubmit: (data: BoardFull) => void;
@@ -33,12 +34,12 @@ const Modal = ({ onSubmit, whichModal, defaultValue, onRemove }: Props) => {
   return (
     <>
       <div className="modal modal-post !mt-0" role="dialog">
-        <div className="modal-box ">
+        <div className={`modal-box ${whichModal}`}>
           <h3 className="font-bold text-opposite text-lg">Add new Board</h3>
           <form
             onSubmit={handleSubmit((data) => {
               reset();
-              onSubmit(data);
+              onSubmit({ ...data, columns: data.columns.filter((x) => !x.id) });
               toggleModal();
             })}
             className=" rounded pt-6 pb-4 mb-4  space-y-5"
@@ -68,10 +69,7 @@ const Modal = ({ onSubmit, whichModal, defaultValue, onRemove }: Props) => {
               Columns
             </label>
             {fields.map((field, index) => (
-              <Box
-                key={field.id}
-                className="flex rounded-lg bg-gray-input shadow "
-              >
+              <Box className="flex rounded-lg bg-gray-input shadow ">
                 <input
                   key={field.id}
                   {...register(`columns.${index}.title` as const)}
@@ -94,6 +92,9 @@ const Modal = ({ onSubmit, whichModal, defaultValue, onRemove }: Props) => {
                 )}
               </Box>
             ))}
+            <Text className="font-semibold text-red-500">
+              {errors.columns && returnError(errors.columns[0]?.title)}
+            </Text>
 
             <Button
               type="button"

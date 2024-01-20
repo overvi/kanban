@@ -1,17 +1,15 @@
 "use client";
 
 import { schemaTask } from "@/app/api/validation";
-import { useGetColumns } from "@/app/hooks/useColumns";
+import { toggleModal } from "@/app/helpers/ToggleModal";
+import { useDeleteSubTask } from "@/app/hooks/useSubTask";
 import { useAddNewTask } from "@/app/hooks/useTasks";
 import { BoardFull, TaskFull } from "@/app/types/board";
+import { returnError } from "@/app/types/post";
 import { Box, Button, Container, IconButton, Text } from "@radix-ui/themes";
 import { useState } from "react";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import useForm from "../../hooks/useForm";
-import { toggleModal } from "@/app/helpers/ToggleModal";
-import { returnError } from "@/app/types/post";
-import { useDeleteSubTask } from "@/app/hooks/useSubTask";
-import { Board } from "@prisma/client";
 
 interface Props {
   defaultValue?: schemaTask;
@@ -33,7 +31,6 @@ export const AddTaskModal = ({
       schemaType: schemaTask,
     });
 
-  const { data: columns } = useGetColumns();
   const [columnId, setColumnId] = useState<string>("0");
   const addNewTask = useAddNewTask();
   const deleteSubTask = useDeleteSubTask();
@@ -56,7 +53,7 @@ export const AddTaskModal = ({
         className="modal !mt-0"
         role="dialog"
       >
-        <div className="modal-box space-y-4 ">
+        <div className={`modal-box space-y-4 ${modal} `}>
           <h3 className="text-lg font-bold">Add New Task</h3>
           <div className="space-y-2">
             <span className="label-text font-bold ">Title</span>
@@ -106,6 +103,10 @@ export const AddTaskModal = ({
                 </IconButton>
               </Box>
             ))}
+
+            <Text className="font-semibold text-red-500">
+              {errors.subTasks && returnError(errors.subTasks[0]?.title)}
+            </Text>
           </Container>
           <Button
             type="button"
@@ -118,6 +119,8 @@ export const AddTaskModal = ({
             <div className="space-y-2">
               <span className="label-text font-semibold ">Status</span>
               <select
+                required
+                id="board-select"
                 onChange={(data) => setColumnId(data.target.value)}
                 className="select border-status-100 focus:outline-none block  border  w-full max-w-xs"
               >
@@ -138,7 +141,7 @@ export const AddTaskModal = ({
             {modal == "create" ? "Create Task" : "Edit Task"}
           </Button>
         </div>
-        <label className="modal-backdrop " htmlFor={modal}>
+        <label className="modal-backdrop" htmlFor={modal}>
           Close
         </label>
       </form>

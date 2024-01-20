@@ -13,14 +13,13 @@ const Options = ({ boards }: { boards: Board[] }) => {
   }, []);
   return (
     <>
-      <Box className="space-y-6 py-8">
+      <Box className="space-y-6 py-8 ">
         {boards?.map((option, index) => (
           <Container
             onClick={() => {
               setCurrentBoard(option.id);
             }}
-            key={option.id}
-            className="relative z-0 "
+            className="relative z-0  board-content "
           >
             <Button
               className={`board 

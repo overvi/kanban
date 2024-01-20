@@ -1,11 +1,18 @@
 import { z } from "zod";
 
 export const schemaPatch = z.object({
-  title: z.string().min(1, { message: "Title is Required" }).optional(),
+  title: z
+    .string()
+    .min(1, { message: "Title is Required" })
+    .max(10, "The Maximum is 10 Char")
+    .optional(),
   columns: z
     .array(
       z.object({
-        title: z.string().min(1, { message: "You at least nead one column" }),
+        title: z
+          .string()
+          .max(25, "The Maximum is 25 Char")
+          .min(1, { message: "You at least nead one column" }),
         id: z.number().optional(),
       })
     )
@@ -13,11 +20,25 @@ export const schemaPatch = z.object({
 });
 
 export const schemaTask = z.object({
-  title: z.string().min(1, { message: "The title is Required" }),
-  description: z.string().min(1, { message: "The Description is Required" }),
+  title: z
+    .string()
+    .max(23, "maximum chracter is 23")
+    .min(1, { message: "The title is Required" }),
+  description: z
+    .string()
+    .max(23, "maximum chracter is 23")
+    .min(1, { message: "The Description is Required" }),
   columnId: z.number().optional(),
   subTasks: z
-    .array(z.object({ title: z.string(), id: z.number().optional() }))
+    .array(
+      z.object({
+        title: z
+          .string()
+          .min(1, "title is required")
+          .max(50, "maximum chracter is 50"),
+        id: z.number().optional(),
+      })
+    )
     .optional(),
 });
 

@@ -69,7 +69,10 @@ const Modal = ({ onSubmit, whichModal, defaultValue, onRemove }: Props) => {
               Columns
             </label>
             {fields.map((field, index) => (
-              <Box className="flex rounded-lg bg-gray-input shadow ">
+              <Box
+                key={field.id}
+                className="flex rounded-lg bg-gray-input shadow "
+              >
                 <input
                   key={field.id}
                   {...register(`columns.${index}.title` as const)}

@@ -12,6 +12,7 @@ export default defineConfig({
     },
   },
   e2e: {
+    experimentalOriginDependencies: true,
     baseUrl: "http://localhost:3000",
     setupNodeEvents(on, config) {
       on("task", {

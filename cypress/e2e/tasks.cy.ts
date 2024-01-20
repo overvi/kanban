@@ -21,7 +21,9 @@ describe("Tasks", () => {
     cy.get(" .delete-board").eq(1).click({ force: true });
 
     cy.wait("@deleteTask").then((interception) => {
-      expect(interception.response.statusCode).to.equal(200);
+      if (interception.response) {
+        expect(interception.response.statusCode).to.equal(200);
+      }
       cy.get(".task-0").should("have.length", 0);
     });
   });

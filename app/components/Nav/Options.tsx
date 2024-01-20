@@ -16,6 +16,7 @@ const Options = ({ boards }: { boards: Board[] }) => {
       <Box className="space-y-6 py-8 ">
         {boards?.map((option, index) => (
           <Container
+            key={option.id}
             onClick={() => {
               setCurrentBoard(option.id);
             }}

@@ -1,15 +1,16 @@
 import { faker } from "@faker-js/faker";
-import cypress = require("cypress");
 
-declare namespace Cypress {
-  interface Chainable {
-    openAndCloseModal(value: string): Chainable<Element>;
-    openModal(value: string): Chainable<Element>;
-    seedDataBase(): Chainable<Element>;
-    randomBoard(howMany?: number): Chainable<Element>;
-    randomColumn(howMany?: number): Chainable<Element>;
-    randomTask(): Chainable<Element>;
-    checkHeading(index: number): Chainable<Element>;
+declare global {
+  namespace Cypress {
+    interface Chainable<Subject = any> {
+      openAndCloseModal(value: string): Chainable<Element>;
+      openModal(value: string): Chainable<Element>;
+      seedDataBase(): Chainable<Element>;
+      randomBoard(howMany?: number): Chainable<Element>;
+      randomColumn(howMany?: number): Chainable<Element>;
+      randomTask(): Chainable<Element>;
+      checkHeading(index: number): Chainable<Element>;
+    }
   }
 }
 
@@ -41,6 +42,7 @@ Cypress.Commands.add("randomBoard", (howMany: number = 1) => {
     );
   }
 });
+
 Cypress.Commands.add("randomColumn", (howMany: number = 5) => {
   for (let i = 0; i !== howMany; i++) {
     cy.task(

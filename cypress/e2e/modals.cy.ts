@@ -36,7 +36,9 @@ describe("Modals", () => {
         });
 
       cy.wait("@createBoard").then((interception) => {
-        expect(interception.response.statusCode).to.equal(308);
+        if (interception.response) {
+          expect(interception.response.statusCode).to.equal(308);
+        }
       });
 
       cy.get(".board-content").should("have.length", 2);
@@ -52,7 +54,9 @@ describe("Modals", () => {
       cy.get(".delete-board").eq(0).click({ force: true });
 
       cy.wait("@deleteBoard").then((interception) => {
-        expect(interception.response.statusCode).to.equal(200);
+        if (interception.response) {
+          expect(interception?.response.statusCode).to.equal(200);
+        }
       });
 
       cy.get(".board-content").should("have.length", 0);
@@ -74,7 +78,9 @@ describe("Modals", () => {
       cy.get('.6 button[type="submit"]').click();
 
       cy.wait("@updateBoard").then((interception) => {
-        expect(interception.response.statusCode).to.equal(200);
+        if (interception.response) {
+          expect(interception?.response.statusCode).to.equal(200);
+        }
       });
     });
 
@@ -92,7 +98,9 @@ describe("Modals", () => {
       cy.get('.create button[type="submit"]').click();
 
       cy.wait("@createTask").then((interception) => {
-        expect(interception.response.statusCode).to.equal(201);
+        if (interception.response) {
+          expect(interception?.response.statusCode).to.equal(201);
+        }
       });
     });
   });

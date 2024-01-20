@@ -4,17 +4,12 @@ import { Box, Flex, Heading, Text } from "@radix-ui/themes";
 import { Draggable } from "react-beautiful-dnd";
 import { AddTaskModal } from "../components/Modals/AddTaskModal";
 import { DeleteModal } from "../components/Modals/Modals";
-import { useGetColumns } from "../hooks/useColumns";
 import {
   useAddNewSubTask,
   useCompleteSubTask,
   useUpdateSubTask,
 } from "../hooks/useSubTask";
-import {
-  useDeleteTask,
-  useUpdateTask,
-  useUpdateTaskLocation,
-} from "../hooks/useTasks";
+import { useDeleteTask } from "../hooks/useTasks";
 import { TaskFull } from "../types/board";
 import { toggleModal } from "./ToggleModal";
 
@@ -26,8 +21,7 @@ interface Props {
 
 const ShowModal = ({ task, modalId, index }: Props) => {
   const assignSubTask = useCompleteSubTask();
-  const { data: columns } = useGetColumns();
-  const updateLocation = useUpdateTaskLocation();
+
   const deleteTask = useDeleteTask();
   const updateTask = useUpdateSubTask();
   const addNewSubTask = useAddNewSubTask();
@@ -45,10 +39,7 @@ const ShowModal = ({ task, modalId, index }: Props) => {
       </DeleteModal>
       <AddTaskModal
         onSubmit={(data) => {
-          const stale = task.subTasks.map((subTask) => subTask.id);
-          const freshData = data.subTasks.filter(
-            (subTask) => !stale.includes(subTask.id)
-          );
+          const freshData = data.subTasks.filter((x) => !x.id);
 
           addNewSubTask.mutate({
             subTasks: freshData.map((a) => ({
@@ -95,7 +86,7 @@ const ShowModal = ({ task, modalId, index }: Props) => {
         className="modal-toggle task_modal"
       />
       <div className="modal" style={{ marginTop: 0 }} role="dialog">
-        <div className="modal-box cursor-default">
+        <div className={`modal-box cursor-default task-${index}`}>
           <Flex className="space-y-3">
             <Box className="flex justify-between">
               <Heading className="text-opposite text-xl font-semibold">
@@ -148,9 +139,12 @@ const ShowModal = ({ task, modalId, index }: Props) => {
             <Box className="space-y-2 ">
               <label
                 htmlFor="first_name"
-                className="block mb-2  font-bold text-sm  text-opposite"
+                className="flex gap-1 mb-2   font-bold text-sm  text-opposite"
               >
-                Subtasks (0 of {task.subTasks?.length})
+                Subtasks
+                <Text>({task.subTasks.filter((x) => x.completed).length}</Text>
+                <Text> of</Text>
+                <Text> {task.subTasks?.length})</Text>
               </label>
 
               {task.subTasks?.map((subTask) => (

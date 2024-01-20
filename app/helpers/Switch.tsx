@@ -20,7 +20,7 @@ const Switch = () => {
     <input
       onChange={() => setTheme(theme === "light" ? "dark" : "light")}
       type="checkbox"
-      className="toggle toggle-md mx-5"
+      className="toggle toggle-color-mode toggle-md mx-5"
     />
   );
 };

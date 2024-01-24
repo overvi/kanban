@@ -1,5 +1,3 @@
-import { faker } from "@faker-js/faker";
-
 describe("Dark Mode", () => {
   beforeEach(() => {
     cy.visit("/");

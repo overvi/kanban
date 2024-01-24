@@ -11,7 +11,7 @@ describe("Header", () => {
 
   it("change the header when board changed", () => {
     for (let i = 0; i !== 5; i++) {
-      cy.get(".board-content button").eq(i).click({ force: true });
+      cy.get(".board-content button").eq(i).forceClick();
       cy.checkHeading(i);
     }
   });

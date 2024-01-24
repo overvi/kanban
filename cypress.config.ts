@@ -2,6 +2,7 @@ import { defineConfig } from "cypress";
 import mysql from "mysql2";
 
 export default defineConfig({
+  projectId: '3nivts',
   env: {
     db: {
       user: "root",

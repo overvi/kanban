@@ -10,6 +10,9 @@ declare global {
       randomColumn(howMany?: number): Chainable<Element>;
       randomTask(): Chainable<Element>;
       checkHeading(index: number): Chainable<Element>;
+      checkResponseStatus(status: number, alias: string): Chainable<Element>;
+      forceClick(): Chainable<Subject>;
+      randomSubTask();
     }
   }
 }
@@ -32,6 +35,7 @@ Cypress.Commands.add("seedDataBase", () => {
   cy.task("queryDB", "DELETE FROM board");
   cy.task("queryDB", "DELETE FROM `column`");
   cy.task("queryDB", "DELETE FROM task");
+  cy.task("queryDB", "DELETE FROM subtask");
 });
 
 Cypress.Commands.add("randomBoard", (howMany: number = 1) => {
@@ -44,6 +48,7 @@ Cypress.Commands.add("randomBoard", (howMany: number = 1) => {
 });
 
 Cypress.Commands.add("randomColumn", (howMany: number = 5) => {
+  cy.randomBoard();
   for (let i = 0; i !== howMany; i++) {
     cy.task(
       "queryDB",
@@ -53,14 +58,14 @@ Cypress.Commands.add("randomColumn", (howMany: number = 5) => {
 });
 
 Cypress.Commands.add("randomTask", () => {
+  cy.randomBoard();
+  cy.randomColumn();
   for (let i = 0; i !== 1; i++) {
     cy.task(
       "queryDB",
       'INSERT INTO task (title, description, `order` , columnId ) SELECT "Task Title", "Task Description", 1 , id FROM `column` ORDER BY id LIMIT 1;'
     );
   }
-
-  cy.visit("/");
 });
 
 Cypress.Commands.add("checkHeading", (index: number) => {
@@ -70,4 +75,32 @@ Cypress.Commands.add("checkHeading", (index: number) => {
     .then((boardContentText) => {
       cy.get(".Heading").invoke("text").should("equal", boardContentText);
     });
+});
+
+Cypress.Commands.add("checkResponseStatus", (status: number, alias: string) => {
+  cy.wait(alias).then((interception) => {
+    if (interception.response) {
+      expect(interception.response.statusCode).to.equal(status);
+    }
+  });
+});
+
+Cypress.Commands.add(
+  "forceClick",
+  { prevSubject: "element" },
+  (subject: JQuery, options?: any) => {
+    cy.wrap(subject).click({ force: true, ...options });
+  }
+);
+
+Cypress.Commands.add("randomSubTask", () => {
+  cy.randomBoard();
+  cy.randomColumn();
+  cy.randomTask();
+  for (let i = 0; i !== 1; i++) {
+    cy.task(
+      "queryDB",
+      'INSERT INTO subtask (title, completed, taskId ) SELECT "subTask title", false, id FROM task ORDER BY id LIMIT 1;'
+    );
+  }
 });

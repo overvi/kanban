@@ -12,7 +12,7 @@ declare global {
       checkHeading(index: number): Chainable<Element>;
       checkResponseStatus(status: number, alias: string): Chainable<Element>;
       forceClick(): Chainable<Subject>;
-      randomSubTask();
+      randomSubTask(): Chainable<Subject>;
     }
   }
 }

@@ -135,7 +135,7 @@ export const NavBarModal = ({ boards }: { boards: Board[] }) => {
 
       <input type="checkbox" id="my_modal_nav" className="modal-toggle " />
       <div className="modal" role="dialog">
-        <div className="modal-box hidden  bg-gray-2">
+        <div className="modal-box bg-gray-2">
           <Nav boards={boards} />
         </div>
         <label className="modal-backdrop" htmlFor="my_modal_nav">

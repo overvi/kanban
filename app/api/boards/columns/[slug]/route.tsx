@@ -6,7 +6,7 @@ export async function GET(
   { params }: { params: { slug: string } }
 ) {
   const targetColumn = await prisma?.column.findUnique({
-    where: { id: parseInt(params.slug) },
+    where: { id: params.slug },
   });
   const tasks = await prisma?.task.findMany({
     where: { columnId: targetColumn?.id },

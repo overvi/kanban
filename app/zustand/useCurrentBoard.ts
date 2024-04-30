@@ -4,18 +4,18 @@ import { Board } from "@prisma/client";
 import { axiosC } from "../services/useAll";
 
 type State = {
-  currentBoard: number | undefined;
+  currentBoard: string | undefined;
 };
 
 type Action = {
-  setCurrentBoard: (state?: number) => void;
+  setCurrentBoard: (state?: string) => void;
 };
 
 export const useBearStore = create<State & Action>()(
   persist(
     (set, get) => ({
-      currentBoard: 0,
-      setCurrentBoard: async (state?: number) => {
+      currentBoard: "",
+      setCurrentBoard: async (state?: string) => {
         const result = await axiosC
           .get<Board[]>("/boards")
           .then((res) => res.data);

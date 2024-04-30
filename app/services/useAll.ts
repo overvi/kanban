@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export interface DeleteProps {
-  columnId?: number;
-  boardId?: number;
+  columnId?: string;
+  boardId?: string;
   deleteAll?: true | false;
 }
 

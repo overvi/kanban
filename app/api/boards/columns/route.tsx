@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
-  const body: { taskId: number; columnId: number; taskOrder: number[] } =
+  const body: { taskId: string; columnId: string; taskOrder: string[] } =
     await request.json();
   const target = await prisma?.column.findUnique({
     where: { id: body.columnId },

@@ -15,7 +15,7 @@ import { toggleModal } from "./ToggleModal";
 
 interface Props {
   task: TaskFull;
-  modalId: number;
+  modalId: string;
   index: number;
 }
 

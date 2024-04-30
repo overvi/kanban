@@ -20,9 +20,7 @@ const Board = ({ boards }: { boards: BoardFull[] }) => {
       column.tasks.map((task) => task.id)
     );
 
-    const currentColumnId = task?.find((task) =>
-      task.includes(parseInt(draggableId))
-    );
+    const currentColumnId = task?.find((task) => task.includes(draggableId));
     const currentColumn = board?.columns.find((column) =>
       column.tasks.find((task) => currentColumnId?.includes(task.id))
     );
@@ -37,16 +35,16 @@ const Board = ({ boards }: { boards: BoardFull[] }) => {
     }
 
     const start = board?.columns.find(
-      (column) => column.id == parseInt(source.droppableId)
+      (column) => column.id == source.droppableId
     );
     const finish = board?.columns.find(
-      (column) => column.id == parseInt(destination.droppableId)
+      (column) => column.id == destination.droppableId
     );
 
     if (start?.id === finish?.id) {
       const taskIds = currentColumn?.tasks.map((task) => task.id);
       taskIds?.splice(source.index, 1);
-      taskIds?.splice(destination.index, 0, parseInt(draggableId));
+      taskIds?.splice(destination.index, 0, draggableId);
 
       const taskItem = currentColumn?.tasks.splice(source.index, 1)[0];
       currentColumn?.tasks.splice(destination.index, 0, taskItem!);
@@ -59,7 +57,7 @@ const Board = ({ boards }: { boards: BoardFull[] }) => {
       const item = start?.tasks.splice(source.index, 1)[0];
       finish?.tasks.splice(destination.index, 0, item!);
       updateTaskColumn.mutate({
-        taskId: parseInt(draggableId),
+        taskId: draggableId,
         columnId: finish?.id!,
       });
     }

@@ -1,7 +1,7 @@
 import { useAdd, useDelete, useUpdate } from "../services/useApiClient";
 
 export const useCompleteSubTask = () => {
-  return useUpdate<{ completed: boolean; subTaskId: number }>({
+  return useUpdate<{ completed: boolean; subTaskId: string }>({
     api: `columns/subtasks`,
     mutationKey: "subtasks",
     queryKey: "subtasks",
@@ -9,7 +9,7 @@ export const useCompleteSubTask = () => {
 };
 
 export const useDeleteSubTask = () => {
-  return useDelete<{ subTaskId: number }>({
+  return useDelete<{ subTaskId: string }>({
     api: "columns/tasks/subtasks",
     mutationKey: "subTasks",
     queryKey: "subTasks",
@@ -17,7 +17,7 @@ export const useDeleteSubTask = () => {
 };
 
 export const useAddNewSubTask = () => {
-  return useAdd<{ taskId: number; subTasks: { title: string }[] }>({
+  return useAdd<{ taskId: string; subTasks: { title: string }[] }>({
     api: "columns/tasks/subtasks",
     mutationKey: "subTasks",
     queryKey: "subTasks",

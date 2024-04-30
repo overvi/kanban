@@ -80,7 +80,7 @@ export const EditBoard = ({ defaultValue }: { defaultValue: BoardFull }) => {
           if (columns?.columns[index])
             mutateDelete.mutate({
               boardId: currentBoard!,
-              columnId: defaultValue?.columns[index].id || 1,
+              columnId: defaultValue?.columns[index].id || "",
             });
         }}
         defaultValue={defaultValue}

@@ -2,8 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { APIFunctions } from "../services/useAll";
 import { useAdd, useDelete, useUpdate } from "../services/useApiClient";
 import { TaskFull } from "../types/board";
-import { schemaTask } from "../api/validation";
-import { number } from "zod";
 
 export const useGet = <T>(api: string) => {
   const create = new APIFunctions("columns/" + api);
@@ -13,12 +11,12 @@ export const useGet = <T>(api: string) => {
   });
 };
 
-export const useGetTasks = (id: number) => {
+export const useGetTasks = (id: string) => {
   return useGet<TaskFull[]>(id.toString());
 };
 
 export const useAssignTask = () => {
-  return useAdd<{ columnId: number }>({
+  return useAdd<{ columnId: string }>({
     api: `columns`,
     mutationKey: "tasks",
     queryKey: "tasks",
@@ -26,7 +24,7 @@ export const useAssignTask = () => {
 };
 
 export const useUpdateTaskLocation = () => {
-  return useUpdate<{ taskId: number; columnId: number }>({
+  return useUpdate<{ taskId: string; columnId: string }>({
     api: "columns/tasks",
     mutationKey: "tasks",
     queryKey: "tasks",
@@ -35,7 +33,7 @@ export const useUpdateTaskLocation = () => {
 };
 
 export const useDeleteTask = () => {
-  return useDelete<{ taskId: number }>({
+  return useDelete<{ taskId: string }>({
     api: "columns/tasks",
     mutationKey: "tasks",
     queryKey: "tasks",
@@ -43,7 +41,7 @@ export const useDeleteTask = () => {
 };
 
 export const useUpdateTask = () => {
-  return useUpdate<TaskFull & { taskId: number }>({
+  return useUpdate<TaskFull & { taskId: string }>({
     api: "columns/tasks",
     mutationKey: "tasks",
     queryKey: "tasks",
@@ -51,7 +49,7 @@ export const useUpdateTask = () => {
 };
 
 export const useAddNewTask = () => {
-  return useAdd<TaskFull & { columnId: number }>({
+  return useAdd<TaskFull & { columnId: string }>({
     api: "columns",
     mutationKey: "tasks",
     queryKey: "tasks",
@@ -59,7 +57,7 @@ export const useAddNewTask = () => {
 };
 
 export const useUpdateTest = () => {
-  return useUpdate<{ columnId: number; taskOrder: number[] }>({
+  return useUpdate<{ columnId: string; taskOrder: string[] }>({
     api: "columns",
     mutationKey: "tasks",
     queryKey: "tasks",

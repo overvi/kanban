@@ -13,7 +13,7 @@ import useForm from "../../hooks/useForm";
 
 interface Props {
   defaultValue?: schemaTask;
-  onSubmit?: (data: TaskFull & { columnId: number }) => void;
+  onSubmit?: (data: TaskFull & { columnId: string }) => void;
   modal: string;
   board?: BoardFull;
 }
@@ -45,7 +45,7 @@ export const AddTaskModal = ({
           if (!onSubmit) {
             return addNewTask.mutate({
               ...data,
-              columnId: parseInt(columnId),
+              columnId: columnId,
             });
           }
           onSubmit(data);

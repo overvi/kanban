@@ -12,7 +12,7 @@ export async function DELETE(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const body: { taskId: number; subTasks: [{ title: string }] } =
+  const body: { taskId: string; subTasks: [{ title: string }] } =
     await request.json();
 
   const targetTask = await prisma?.task.findUnique({
@@ -34,8 +34,8 @@ export async function PATCH(request: NextRequest) {
   const body: {
     title: string;
     description: string;
-    taskId: number;
-    subTasks: { id: number; title: string }[];
+    taskId: string;
+    subTasks: { id: string; title: string }[];
   } = await request.json();
 
   const targetTask = await prisma?.task.findUnique({
@@ -49,7 +49,7 @@ export async function PATCH(request: NextRequest) {
       description: body.description,
     },
   });
-  const update = async (title: string, id: number) => {
+  const update = async (title: string, id: string) => {
     const updatedSubTask = await prisma?.subTask.updateMany({
       where: { id },
       data: {
@@ -61,7 +61,7 @@ export async function PATCH(request: NextRequest) {
   };
 
   const results = await Promise.all(
-    body.subTasks.map((subTask) => update(subTask.title, subTask.id || 0))
+    body.subTasks.map((subTask) => update(subTask.title, subTask.id || ""))
   );
 
   return NextResponse.json({ results, updateTask }, { status: 200 });

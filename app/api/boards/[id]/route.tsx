@@ -9,7 +9,7 @@ interface Props {
 export async function DELETE(request: NextRequest, { params }: Props) {
   const body = await request.json();
   const target = await prisma?.board.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id: params.id },
   });
 
   if (!target) return NextResponse.json("The board not find", { status: 400 });
@@ -48,7 +48,7 @@ export async function DELETE(request: NextRequest, { params }: Props) {
   }
 
   const board = await prisma?.board.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id: params.id },
     include: {
       columns: {
         include: {
@@ -79,12 +79,12 @@ export async function DELETE(request: NextRequest, { params }: Props) {
   }
 
   await prisma?.column.deleteMany({
-    where: { boardId: parseInt(params.id) },
+    where: { boardId: params.id },
   });
 
   // Finally, delete the board
   await prisma?.board.delete({
-    where: { id: parseInt(params.id) },
+    where: { id: params.id },
   });
 
   return NextResponse.json(board, { status: 200 });
@@ -99,19 +99,19 @@ export async function PATCH(request: NextRequest, { params }: Props) {
     return NextResponse.json(validation.error.format(), { status: 400 });
 
   const target = await prisma?.board.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id: params.id },
   });
 
   if (!target) return NextResponse.json("The board not find", { status: 400 });
 
   const updatedBoard = await prisma?.board.update({
-    where: { id: parseInt(params.id) },
+    where: { id: params.id },
     data: {
       title: body.title,
     },
   });
 
-  const updateColumn = async (id: number, title: string) => {
+  const updateColumn = async (id: string, title: string) => {
     const updatedColumn = await prisma?.column.updateMany({
       where: { id },
       data: {
@@ -122,7 +122,7 @@ export async function PATCH(request: NextRequest, { params }: Props) {
   };
 
   const results = await Promise.all(
-    body.columns.map((column) => updateColumn(column.id || 0, column.title))
+    body.columns.map((column) => updateColumn(column.id || "", column.title))
   );
 
   return NextResponse.json({ updatedBoard, results }, { status: 200 });
@@ -130,7 +130,7 @@ export async function PATCH(request: NextRequest, { params }: Props) {
 
 export async function GET(request: NextRequest, { params }: Props) {
   const data = await prisma?.board.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id: params.id },
 
     include: {
       columns: {
@@ -152,7 +152,7 @@ export async function POST(request: NextRequest, { params }: Props) {
     return NextResponse.json(validation.error.format(), { status: 400 });
 
   const target = await prisma?.board.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id: params.id },
   });
 
   if (!target)
@@ -161,7 +161,7 @@ export async function POST(request: NextRequest, { params }: Props) {
   const newColumn = await prisma?.column.createMany({
     data: body.columns.map((column) => ({
       title: column.title,
-      boardId: parseInt(params.id),
+      boardId: params.id,
     })),
   });
 

@@ -15,7 +15,10 @@ const Heading = ({ boards }: { boards: Board[] }) => {
           {title?.title || "Nothing Here"}
         </Head>
       </Box>
-      <Text className="font-bold px-8">
+      <Text
+        className="hidden md:block 
+      text-xs px-8"
+      >
         &copy; 2024 Ali028 All rights reserved.
       </Text>
 

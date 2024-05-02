@@ -4,6 +4,8 @@ import { useBearStore } from "@/app/zustand/useCurrentBoard";
 import { Board } from "@prisma/client";
 import { Box, Flex, Heading as Head, Text } from "@radix-ui/themes";
 import { NavBarModal } from "../Modals/Modals";
+import Image from "next/image";
+import myself from "@/public/man1.jpg";
 
 const Heading = ({ boards }: { boards: Board[] }) => {
   const { currentBoard } = useBearStore();
@@ -15,12 +17,14 @@ const Heading = ({ boards }: { boards: Board[] }) => {
           {title?.title || "Nothing Here"}
         </Head>
       </Box>
-      <Text
-        className="hidden md:block 
-      text-xs px-8"
-      >
-        &copy; 2024 Ali028 All rights reserved.
-      </Text>
+
+      <Image
+        className="rounded-full"
+        alt="myself"
+        src={myself}
+        width={50}
+        height={50}
+      />
 
       <NavBarModal boards={boards} />
     </Flex>

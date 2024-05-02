@@ -18,14 +18,6 @@ const Heading = ({ boards }: { boards: Board[] }) => {
         </Head>
       </Box>
 
-      <Image
-        className="rounded-full"
-        alt="myself"
-        src={myself}
-        width={50}
-        height={50}
-      />
-
       <NavBarModal boards={boards} />
     </Flex>
   );

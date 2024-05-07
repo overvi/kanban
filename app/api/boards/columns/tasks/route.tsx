@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
+import { auth } from "@clerk/nextjs/server";
 
 export async function PATCH(request: NextRequest) {
+  const session = auth();
+
+  if (!session) return NextResponse.json({}, { status: 401 });
+
   const body = await request.json();
 
   const targetTask = await prisma?.task.findUnique({
@@ -34,6 +39,10 @@ export async function PATCH(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+  const session = auth();
+
+  if (!session) return NextResponse.json({}, { status: 401 });
+
   const body = await request.json();
 
   const targetTask = await prisma?.task.findUnique({

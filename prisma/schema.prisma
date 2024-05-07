@@ -15,7 +15,8 @@ model Board {
   id           String       @id @default(auto()) @map("_id") @db.ObjectId
   title     String   
   createdAt DateTime @default(now()) @updatedAt
-  columns   Column[] 
+  columns   Column[]
+  userId String
 }
 
 model Column {

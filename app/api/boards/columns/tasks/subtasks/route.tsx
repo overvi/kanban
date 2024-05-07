@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
+import { auth } from "@clerk/nextjs/server";
 
 export async function DELETE(request: NextRequest) {
+  const session = auth();
+
+  if (!session) return NextResponse.json({}, { status: 401 });
+
   const body = await request.json();
 
   const deletedSubTask = await prisma?.subTask.delete({
@@ -12,6 +17,10 @@ export async function DELETE(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const session = auth();
+
+  if (!session) return NextResponse.json({}, { status: 401 });
+
   const body: { taskId: string; subTasks: [{ title: string }] } =
     await request.json();
 
@@ -31,6 +40,10 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
+  const session = auth();
+
+  if (!session) return NextResponse.json({}, { status: 401 });
+
   const body: {
     title: string;
     description: string;

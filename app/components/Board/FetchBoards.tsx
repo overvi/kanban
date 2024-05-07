@@ -8,9 +8,12 @@ import { useBearStore } from "@/app/zustand/useCurrentBoard";
 import LoadingBase from "@/loading";
 import { Box, Container, Flex, Text } from "@radix-ui/themes";
 import Empty from "./Empty";
+import AuthToast, { AuthToastCompoent } from "@/app/helpers/AuthToast";
+import { useUser } from "@clerk/nextjs";
 
 export default function FetchBoards({ boards }: { boards: BoardFull[] }) {
   const { currentBoard } = useBearStore();
+  const { isSignedIn } = useUser();
   const currentColumn = boards.find((column) => column.id === currentBoard);
 
   if (!boards.length) return <Empty />;
@@ -58,15 +61,18 @@ export default function FetchBoards({ boards }: { boards: BoardFull[] }) {
       ))}
 
       {currentColumn.columns.length !== 6 && (
-        <label
-          htmlFor="my_modal_6"
-          className="group mt-[2.6rem] cursor-pointer self-start items-center justify-center flex add-column-bg rounded-md w-[18rem] h-[70vh]"
-        >
-          <Text className="group-hover:text-purple-1 text-gray-1 text-2xl font-semibold">
-            +New Column
-          </Text>
-        </label>
+        <AuthToast>
+          <label
+            htmlFor={isSignedIn ? "my_modal_6" : ""}
+            className="group mt-[2.6rem] cursor-pointer self-start items-center justify-center flex add-column-bg rounded-md w-[18rem] h-[70vh]"
+          >
+            <Text className="group-hover:text-purple-1 text-gray-1 text-2xl font-semibold">
+              +New Column
+            </Text>
+          </label>
+        </AuthToast>
       )}
+      <AuthToastCompoent />
     </>
   );
 }

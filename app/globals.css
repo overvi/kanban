@@ -39,7 +39,8 @@ html {
   --input-bg: #fff;
   --loading-base: #ebebeb;
   --loading-highlight: #f5f5f5;
-
+  --loading-avatar-base: var(--loading-base);
+  --loading-avatar-highlight: var(--loading-highlight);
   --status: #e8e4e3;
 }
 
@@ -54,7 +55,8 @@ html {
   --input-bg: rgb(55 65 81 / 1);
   --loading-base: #2b2c37;
   --loading-highlight: #20212c;
-
+  --loading-avatar-base: #5c5b5b;
+  --loading-avatar-highlight: #737272;
   --status: #5c5b5b;
 }
 
@@ -113,11 +115,6 @@ html {
 
 .form-bg {
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
-}
-
-.react-loading-skeleton {
-  --base-color: var(--loading-base) !important;
-  --highlight-color: var(--loading-highlight) !important;
 }
 
 .shadow-task {

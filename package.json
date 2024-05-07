@@ -10,6 +10,9 @@
     "cypress:open": "cypress open"
   },
   "dependencies": {
+    "@chakra-ui/accordion": "^2.3.1",
+    "@clerk/nextjs": "^5.0.6",
+    "@clerk/themes": "^2.1.2",
     "@hello-pangea/dnd": "^16.5.0",
     "@hookform/resolvers": "^3.3.2",
     "@prisma/client": "^5.6.0",
@@ -21,7 +24,7 @@
     "axios": "^1.6.2",
     "flowbite": "^2.2.0",
     "mysql2": "^3.7.0",
-    "next": "14.0.3",
+    "next": "^14.2.3",
     "next-themes": "^0.2.1",
     "react": "^18",
     "react-beautiful-dnd": "^13.1.1",
@@ -30,6 +33,7 @@
     "react-icons": "^4.12.0",
     "react-indiana-drag-scroll": "^2.2.0",
     "react-loading-skeleton": "^3.3.1",
+    "react-toastify": "^10.0.5",
     "zod": "^3.22.4",
     "zustand": "^4.4.7"
   },

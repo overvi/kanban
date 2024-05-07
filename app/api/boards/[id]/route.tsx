@@ -1,12 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { schemaColumn, schemaPatch, schmeaColumn } from "../../validation";
 import prisma from "@/prisma/client";
+import { auth } from "@clerk/nextjs/server";
 
 interface Props {
   params: { id: string };
 }
 
 export async function DELETE(request: NextRequest, { params }: Props) {
+  const session = auth();
+
+  if (!session) return NextResponse.json({}, { status: 401 });
+
   const body = await request.json();
   const target = await prisma?.board.findUnique({
     where: { id: params.id },
@@ -92,6 +97,10 @@ export async function DELETE(request: NextRequest, { params }: Props) {
 // Delete subtasks in each task
 
 export async function PATCH(request: NextRequest, { params }: Props) {
+  const session = auth();
+
+  if (!session) return NextResponse.json({}, { status: 401 });
+
   const body: schemaPatch = await request.json();
   const validation = schemaPatch.safeParse(body);
 
@@ -145,6 +154,10 @@ export async function GET(request: NextRequest, { params }: Props) {
 }
 
 export async function POST(request: NextRequest, { params }: Props) {
+  const session = auth();
+
+  if (!session) return NextResponse.json({}, { status: 401 });
+
   const body: schemaColumn = await request.json();
   const validation = schmeaColumn.safeParse(body);
 

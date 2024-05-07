@@ -12,6 +12,8 @@ import {
 import { useDeleteTask } from "../hooks/useTasks";
 import { TaskFull } from "../types/board";
 import { toggleModal } from "./ToggleModal";
+import AuthToast, { AuthToastCompoent } from "./AuthToast";
+import { useUser } from "@clerk/nextjs";
 
 interface Props {
   task: TaskFull;
@@ -21,10 +23,11 @@ interface Props {
 
 const ShowModal = ({ task, modalId, index }: Props) => {
   const assignSubTask = useCompleteSubTask();
-
   const deleteTask = useDeleteTask();
   const updateTask = useUpdateSubTask();
   const addNewSubTask = useAddNewSubTask();
+
+  const { isSignedIn } = useUser();
   return (
     <>
       <DeleteModal
@@ -114,22 +117,26 @@ const ShowModal = ({ task, modalId, index }: Props) => {
                   tabIndex={0}
                   className="bg-gray-input dropdown-content z-[1] menu p-2 shadow rounded-box w-52"
                 >
-                  <li>
-                    <label
-                      onClick={() => toggleModal()}
-                      htmlFor={`edit_${task.id}`}
-                    >
-                      <Text>Edit</Text>
-                    </label>
-                  </li>
-                  <li>
-                    <label
-                      onClick={() => toggleModal()}
-                      htmlFor={`delete_${task.id}`}
-                    >
-                      <Text>Delete</Text>
-                    </label>
-                  </li>
+                  <AuthToast>
+                    <li>
+                      <label
+                        onClick={() => toggleModal()}
+                        htmlFor={isSignedIn ? `edit_${task.id}` : ""}
+                      >
+                        <Text>Edit</Text>
+                      </label>
+                    </li>
+                  </AuthToast>
+                  <AuthToast>
+                    <li>
+                      <label
+                        onClick={() => toggleModal()}
+                        htmlFor={isSignedIn ? `delete_${task.id}` : ""}
+                      >
+                        <Text>Delete</Text>
+                      </label>
+                    </li>
+                  </AuthToast>
                 </ul>
               </div>
             </Box>
@@ -185,6 +192,7 @@ const ShowModal = ({ task, modalId, index }: Props) => {
           Close
         </label>
       </div>
+      <AuthToastCompoent />
     </>
   );
 };

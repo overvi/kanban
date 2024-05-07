@@ -3,6 +3,7 @@ import { Box, Heading } from "@radix-ui/themes";
 import { ReactNode } from "react";
 import ToggleColorMode from "../../helpers/ToggleColorMode";
 import Options from "./Options";
+import { clerkClient } from "@clerk/nextjs/server";
 
 interface Props {
   children?: ReactNode;

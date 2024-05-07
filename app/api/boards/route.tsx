@@ -1,12 +1,17 @@
+import prisma from "@/prisma/client";
+import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 import { schemaPost } from "../validation";
-import prisma from "@/prisma/client";
 
 interface Props {
   params: { id: string };
 }
 
 export async function POST(request: NextRequest, { params }: Props) {
+  const session = auth();
+
+  if (!session) return NextResponse.json({}, { status: 401 });
+
   const body: schemaPost = await request.json();
   const validation = schemaPost.safeParse(body);
 
@@ -16,6 +21,7 @@ export async function POST(request: NextRequest, { params }: Props) {
   const newBoard = await prisma?.board.create({
     data: {
       title: body.title,
+      userId: session.userId!,
 
       columns: {
         createMany: {
@@ -31,7 +37,9 @@ export async function POST(request: NextRequest, { params }: Props) {
 }
 
 export async function GET(request: NextRequest) {
+  const { userId } = auth();
   const data = await prisma?.board.findMany({
+    where: { userId: userId || "" },
     include: {
       columns: true,
     },

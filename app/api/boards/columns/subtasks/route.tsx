@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
+import { auth } from "@clerk/nextjs/server";
 
 export async function PATCH(
   request: NextRequest,
   { params }: { params: { subtask: string } }
 ) {
+  const session = auth();
+
+  if (!session) return NextResponse.json({}, { status: 401 });
+
   const body = await request.json();
   const targetSubTask = await prisma?.subTask.findUnique({
     where: { id: body.subTaskId },

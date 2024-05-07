@@ -5,6 +5,8 @@ import "./globals.css";
 import "./theme-config.css";
 import { Theme } from "@radix-ui/themes";
 import Query from "@/Query";
+import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 
 const jakarta = Plus_Jakarta_Sans({
   weight: ["200", "300", "400", "500", "600", "700"],
@@ -24,16 +26,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={jakarta.variable}>
-        <Query>
-          <Theme>
-            <DarkMode>
-              <main>{children}</main>
-            </DarkMode>
-          </Theme>
-        </Query>
-      </body>
-    </html>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+      }}
+    >
+      <html lang="en">
+        <body className={jakarta.variable}>
+          <Query>
+            <Theme>
+              <DarkMode>
+                <main>{children}</main>
+              </DarkMode>
+            </Theme>
+          </Query>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

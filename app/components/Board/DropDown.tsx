@@ -6,8 +6,11 @@ import { useBearStore } from "@/app/zustand/useCurrentBoard";
 import { IconButton, Text } from "@radix-ui/themes";
 import { DeleteModal, EditBoard } from "../Modals/Modals";
 import { IoMdMore } from "react-icons/io";
+import AuthToast, { AuthToastCompoent } from "@/app/helpers/AuthToast";
+import { useUser } from "@clerk/nextjs";
 
 const DropDown = ({ boards }: { boards: BoardFull[] }) => {
+  const { isSignedIn } = useUser();
   const deleteAll = useDeleteBoard();
   const { currentBoard, setCurrentBoard } = useBearStore();
   const newCurrentBoard = boards.find((board) => board.id == currentBoard);
@@ -39,19 +42,24 @@ const DropDown = ({ boards }: { boards: BoardFull[] }) => {
             tabIndex={0}
             className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
           >
-            <li>
-              <label htmlFor="my_modal_6">
-                <Text>Edit</Text>
-              </label>
-            </li>
-            <li>
-              <label htmlFor="deleteAll">
-                <Text>Delete</Text>
-              </label>
-            </li>
+            <AuthToast>
+              <li>
+                <label htmlFor={isSignedIn ? "my_modal_6" : ""}>
+                  <Text>Edit</Text>
+                </label>
+              </li>
+            </AuthToast>
+            <AuthToast>
+              <li>
+                <label htmlFor={isSignedIn ? "deleteAll" : ""}>
+                  <Text>Delete</Text>
+                </label>
+              </li>
+            </AuthToast>
           </ul>
         </div>
         <EditBoard defaultValue={newCurrentBoard} />
+        <AuthToastCompoent />
       </>
     );
 };

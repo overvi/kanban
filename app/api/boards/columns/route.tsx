@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { schemaTask } from "../../validation";
 import prisma from "@/prisma/client";
+import { auth } from "@clerk/nextjs/server";
 
 export async function POST(request: NextRequest) {
+  const session = auth();
+
+  if (!session) return NextResponse.json({}, { status: 401 });
+
   const body: schemaTask = await request.json();
   const validation = schemaTask.safeParse(body);
 
@@ -49,6 +54,10 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
+  const session = auth();
+
+  if (!session) return NextResponse.json({}, { status: 401 });
+
   const body: { taskId: string; columnId: string; taskOrder: string[] } =
     await request.json();
   const target = await prisma?.column.findUnique({

@@ -1,4 +1,4 @@
-import { Box, Container, Text } from "@radix-ui/themes";
+import { Box, Container } from "@radix-ui/themes";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -9,7 +9,10 @@ const LoadingBase = () => {
       <Container>
         {howManyRows.map((row) => (
           <Box key={row}>
-            <SkeletonTheme>
+            <SkeletonTheme
+              baseColor="var(--loading-base)"
+              highlightColor="var(--loading-highlight)"
+            >
               <Box className="flex gap-4 items-center">
                 <Skeleton circle width="3rem" height="3rem" />
                 <Skeleton containerClassName="ml-4 h-4 w-[16.5rem] h-4 " />
@@ -20,7 +23,6 @@ const LoadingBase = () => {
                   count={1}
                   width="20rem"
                   height="6rem"
-                  borderRadius="5%"
                 />
               </Box>
             </SkeletonTheme>
@@ -36,7 +38,13 @@ export default LoadingBase;
 export const ToggleColorButton = () => {
   return (
     <>
-      <Skeleton height="24px" containerClassName="px-2" width="68px" />
+      <Skeleton
+        baseColor="var(--loading-base)"
+        highlightColor="var(--loading-highlight)"
+        height="24px"
+        containerClassName="px-2"
+        width="68px"
+      />
     </>
   );
 };
